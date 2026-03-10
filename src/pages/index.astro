@@ -1,0 +1,285 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Home">
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <img
+          src="/assets/jarvisos_cyan_logo_text.jpg"
+          alt="JARVIS OS — AI-Native Operating System"
+          class="hero-logo"
+        />
+        <span class="section-label">Research Platform</span>
+        <h1>
+          An AI-native operating system<br />
+          for studying <span class="text-cyan">LLM security threats</span>
+        </h1>
+        <p class="hero-sub">
+          JARVIS OS is an Arch Linux-based research platform that gives a large language model
+          full operating system privileges — then studies what can go wrong. Built at
+          <strong>WSU Everett</strong> to produce the first empirical threat taxonomy for
+          LLM-OS integration.
+        </p>
+        <div class="hero-actions">
+          <a href="/download" class="btn btn-primary">Download ISO</a>
+          <a href="/research" class="btn btn-outline">Read the Research</a>
+        </div>
+        <div class="hero-meta mono">
+          <span>Arch Linux + KDE Plasma 6</span>
+          <span class="text-muted">&bull;</span>
+          <span>Ollama (local LLM)</span>
+          <span class="text-muted">&bull;</span>
+          <span>MCP Orchestration</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key Finding -->
+  <section class="section">
+    <div class="container">
+      <div class="finding-banner glow-border">
+        <span class="tag tag-novel">Novel Finding</span>
+        <h2>Forgetful Context</h2>
+        <p>
+          LLMs silently drop previously stated security constraints mid-session — a threat
+          with <strong>no prior literature</strong>. Discovered through direct operation of
+          JARVIS OS, this finding demonstrates that traditional stateless security models
+          are fundamentally inadequate for probabilistic AI agents.
+        </p>
+        <a href="/research#threat-7" class="btn btn-outline" style="margin-top: var(--space-lg);">
+          Learn more &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features overview -->
+  <section class="section">
+    <div class="container">
+      <span class="section-label">Architecture</span>
+      <h2 class="section-title">How JARVIS OS works</h2>
+      <div class="grid-3">
+        <div class="card">
+          <h3>Local LLM Inference</h3>
+          <p>
+            Powered by Ollama — all inference runs on-device with zero cloud dependencies.
+            Full privacy, full control.
+          </p>
+        </div>
+        <div class="card">
+          <h3>MCP Orchestration</h3>
+          <p>
+            The Model Context Protocol layer lets the LLM autonomously create, modify, and
+            delete system tools — including with sudo privileges.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Modular Build System</h3>
+          <p>
+            Seven scripts transform a base Arch ISO into a bootable AI-native OS. Each stage
+            is isolated, auditable, and reproducible.
+          </p>
+        </div>
+        <div class="card">
+          <h3>KDE Plasma 6 / Wayland</h3>
+          <p>
+            Modern desktop environment running on the Wayland display protocol — a full
+            graphical workstation, not just a CLI tool.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Calamares Installer</h3>
+          <p>
+            Graphical installer for permanent deployment to hardware. No manual partitioning
+            or command-line installation required.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Security Research Platform</h3>
+          <p>
+            Purpose-built to expose and document the real security threats that emerge when
+            LLMs gain OS-level control.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Threat overview -->
+  <section class="section">
+    <div class="container">
+      <span class="section-label">Research</span>
+      <h2 class="section-title">Seven-threat taxonomy</h2>
+      <p style="margin-bottom: var(--space-2xl);">
+        Derived from direct experience building and operating an AI-native OS.
+        Three privilege escalation tiers studied: sandboxed, sudo-elevated, and web-enabled.
+      </p>
+      <div class="threat-overview-grid">
+        <div class="threat-row">
+          <span class="mono text-muted">#01</span>
+          <span>Misinterpreted MCP keyword search</span>
+          <span class="tag tag-medium">Medium</span>
+        </div>
+        <div class="threat-row">
+          <span class="mono text-muted">#02</span>
+          <span>Misleading MCP server usage</span>
+          <span class="tag tag-high">High</span>
+        </div>
+        <div class="threat-row">
+          <span class="mono text-muted">#03</span>
+          <span>Unverified community MCP servers</span>
+          <span class="tag tag-high">High</span>
+        </div>
+        <div class="threat-row">
+          <span class="mono text-muted">#04</span>
+          <span>Unauthorized sudo requests via MCP</span>
+          <span class="tag tag-critical">Critical</span>
+        </div>
+        <div class="threat-row">
+          <span class="mono text-muted">#05</span>
+          <span>Sudo capability exploitation</span>
+          <span class="tag tag-critical">Critical</span>
+        </div>
+        <div class="threat-row">
+          <span class="mono text-muted">#06</span>
+          <span>Unintended file modification / deletion</span>
+          <span class="tag tag-high">High</span>
+        </div>
+        <div class="threat-row">
+          <span class="mono text-muted">#07</span>
+          <span>Forgetful context <span class="text-green mono" style="font-size:0.75rem;">&mdash; NOVEL</span></span>
+          <span class="tag tag-novel">Novel</span>
+        </div>
+      </div>
+      <a href="/research" class="btn btn-outline" style="margin-top: var(--space-xl);">
+        Full research &rarr;
+      </a>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section">
+    <div class="container" style="text-align: center;">
+      <span class="section-label">Get started</span>
+      <h2 class="section-title">Download JARVIS OS</h2>
+      <p style="margin: 0 auto var(--space-xl);">
+        Grab the latest ISO, verify the checksum, and boot into an AI-native research environment.
+      </p>
+      <div class="hero-actions" style="justify-content: center;">
+        <a href="/download" class="btn btn-primary">Download ISO</a>
+        <a href="/docs" class="btn btn-outline">Read the Docs</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Hero */
+  .hero {
+    padding: var(--space-4xl) 0;
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+  }
+
+  .hero-content {
+    max-width: 760px;
+  }
+
+  .hero-logo {
+    width: min(420px, 100%);
+    height: auto;
+    margin-bottom: var(--space-xl);
+    border-radius: 6px;
+  }
+
+  .hero h1 {
+    margin-bottom: var(--space-lg);
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    margin-bottom: var(--space-xl);
+    max-width: 640px;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-xl);
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: var(--space-md);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    flex-wrap: wrap;
+  }
+
+  /* Finding banner */
+  .finding-banner {
+    padding: var(--space-2xl);
+    border-radius: 6px;
+    background: var(--bg-card);
+  }
+
+  .finding-banner h2 {
+    margin: var(--space-md) 0 var(--space-md);
+  }
+
+  .finding-banner p {
+    max-width: 640px;
+  }
+
+  /* Threat overview */
+  .threat-overview-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .threat-row {
+    display: grid;
+    grid-template-columns: 3rem 1fr auto;
+    gap: var(--space-md);
+    align-items: center;
+    padding: var(--space-md) var(--space-lg);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    font-size: 0.9rem;
+  }
+
+  .threat-row:first-child {
+    border-radius: 6px 6px 0 0;
+  }
+
+  .threat-row:last-child {
+    border-radius: 0 0 6px 6px;
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      min-height: auto;
+      padding: var(--space-3xl) 0;
+    }
+
+    .hero-meta {
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .threat-row {
+      grid-template-columns: 1fr auto;
+    }
+
+    .threat-row span:first-child {
+      display: none;
+    }
+  }
+</style>

@@ -1,0 +1,219 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Download"
+  description="Download the latest JARVIS OS ISO — an AI-native Arch Linux distribution."
+>
+  <section class="section">
+    <div class="container">
+      <span class="section-label">Download</span>
+      <h1 class="section-title">Get JARVIS OS</h1>
+      <p class="dl-intro">
+        Download the latest ISO, verify the checksum, and boot into an AI-native research
+        environment. JARVIS OS can be run in a VM or installed to hardware via the included
+        Calamares installer.
+      </p>
+    </div>
+  </section>
+
+  <!-- Latest release (populated by GitHub API at runtime) -->
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      <div class="card release-card glow-border" id="latest-release">
+        <div class="release-header">
+          <span class="tag tag-medium">Latest Release</span>
+          <span class="mono text-muted" id="release-date">Loading...</span>
+        </div>
+        <h2 id="release-tag" style="margin-top: var(--space-md);">Fetching latest release...</h2>
+        <p id="release-body" style="margin-top: var(--space-sm);">
+          Connecting to GitHub API to fetch the latest release information.
+        </p>
+        <div class="release-actions" style="margin-top: var(--space-xl);">
+          <a href="#" class="btn btn-primary" id="download-btn" style="display: none;">
+            Download ISO
+          </a>
+          <a href="#" class="btn btn-outline" id="release-link" style="display: none;">
+            Release notes &nearr;
+          </a>
+        </div>
+        <div id="checksum-block" style="display: none; margin-top: var(--space-xl);">
+          <span class="section-label">SHA-512 Checksum</span>
+          <pre class="mono checksum-pre"><code id="checksum-value"></code></pre>
+        </div>
+      </div>
+
+      <!-- Fallback if no releases -->
+      <noscript>
+        <div class="card" style="margin-top: var(--space-lg);">
+          <p>
+            JavaScript is required to fetch the latest release from GitHub. You can also
+            browse releases directly at
+            <a href="https://github.com/jarvisos/jarvisos/releases" target="_blank" rel="noopener noreferrer">
+              github.com/jarvisos/jarvisos/releases</a>.
+          </p>
+        </div>
+      </noscript>
+    </div>
+  </section>
+
+  <!-- Install instructions -->
+  <section class="section">
+    <div class="container">
+      <span class="section-label">Getting Started</span>
+      <h2 class="section-title">Installation</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>1. Boot from USB</h3>
+          <p>
+            Flash the ISO to a USB drive using <code>dd</code>, Ventoy, or Balena Etcher.
+            Boot from the USB and you'll land in the live environment.
+          </p>
+          <pre class="mono install-cmd"><code>sudo dd if=jarvisos-*.iso of=/dev/sdX bs=4M status=progress</code></pre>
+        </div>
+        <div class="card">
+          <h3>2. Live Environment</h3>
+          <p>
+            The live session gives you a fully functional JARVIS OS with KDE Plasma 6.
+            Test the AI features, explore the system, and run the <code>jarvis</code> CLI.
+          </p>
+        </div>
+        <div class="card">
+          <h3>3. Install to Disk</h3>
+          <p>
+            Launch the Calamares installer from the desktop for a guided installation
+            to your hard drive — automatic partitioning, user setup, and bootloader
+            configuration included.
+          </p>
+        </div>
+        <div class="card">
+          <h3>4. Virtual Machine</h3>
+          <p>
+            JARVIS OS runs well in VirtualBox or QEMU/KVM. Allocate at least 4 GB RAM
+            and 20 GB disk for comfortable usage with local LLM inference.
+          </p>
+          <pre class="mono install-cmd"><code>qemu-system-x86_64 -m 4G -smp 4 -cdrom jarvisos-*.iso</code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mirrors / source -->
+  <section class="section">
+    <div class="container">
+      <span class="section-label">Source</span>
+      <h2 class="section-title">Build from source</h2>
+      <div class="card">
+        <p>
+          JARVIS OS is fully open source. Clone the build system and run the seven-script
+          pipeline to produce your own ISO from scratch.
+        </p>
+        <pre class="mono install-cmd" style="margin-top: var(--space-md);"><code>git clone https://github.com/jarvisos/jarvisos.git
+cd jarvisos
+sudo ./01-*.sh   # begin the build pipeline</code></pre>
+        <a
+          href="https://github.com/jarvisos/jarvisos"
+          class="btn btn-outline"
+          style="margin-top: var(--space-lg);"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View on GitHub &nearr;
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .dl-intro {
+    font-size: 1.05rem;
+    max-width: 640px;
+  }
+
+  .release-card {
+    padding: var(--space-2xl);
+  }
+
+  .release-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .release-actions {
+    display: flex;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+  }
+
+  .checksum-pre {
+    margin-top: var(--space-sm);
+    padding: var(--space-md);
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 0.75rem;
+    overflow-x: auto;
+    word-break: break-all;
+  }
+
+  .install-cmd {
+    margin-top: var(--space-md);
+    padding: var(--space-md);
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 0.8rem;
+    overflow-x: auto;
+  }
+</style>
+
+<script>
+  async function fetchRelease() {
+    try {
+      const res = await fetch(
+        "https://api.github.com/repos/jarvisos/jarvisos/releases/latest"
+      );
+      if (!res.ok) throw new Error("No releases found");
+      const data = await res.json();
+
+      const tagEl = document.getElementById("release-tag");
+      const dateEl = document.getElementById("release-date");
+      const bodyEl = document.getElementById("release-body");
+      const dlBtn = document.getElementById("download-btn") as HTMLAnchorElement;
+      const rlBtn = document.getElementById("release-link") as HTMLAnchorElement;
+
+      if (tagEl) tagEl.textContent = data.name || data.tag_name;
+      if (dateEl)
+        dateEl.textContent = new Date(data.published_at).toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        });
+      if (bodyEl) bodyEl.textContent = data.body?.slice(0, 300) || "No description.";
+
+      // Find ISO asset
+      const iso = data.assets?.find((a: any) => a.name.endsWith(".iso"));
+      if (iso && dlBtn) {
+        dlBtn.href = iso.browser_download_url;
+        dlBtn.style.display = "inline-flex";
+      }
+
+      if (rlBtn) {
+        rlBtn.href = data.html_url;
+        rlBtn.style.display = "inline-flex";
+      }
+    } catch {
+      const tagEl = document.getElementById("release-tag");
+      const bodyEl = document.getElementById("release-body");
+      if (tagEl) tagEl.textContent = "No releases yet";
+      if (bodyEl)
+        bodyEl.innerHTML =
+          'Check <a href="https://github.com/jarvisos/jarvisos/releases">GitHub releases</a> directly.';
+    }
+  }
+
+  fetchRelease();
+</script>

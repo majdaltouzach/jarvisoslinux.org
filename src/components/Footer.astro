@@ -1,0 +1,143 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container">
+    <hr class="divider" />
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <img src="/assets/jarvios_cyan_logo.png" alt="JARVIS OS" class="footer-logo-img" />
+          <span class="footer-logo-text">JARVIS OS</span>
+        </div>
+        <p class="footer-tagline">
+          AI-native operating system research platform.<br />
+          Washington State University — Everett.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-heading">Project</h4>
+        <ul>
+          <li><a href="/research">Research</a></li>
+          <li><a href="/subsystems">Subsystems</a></li>
+          <li><a href="/download">Download</a></li>
+          <li><a href="/docs">Docs</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-heading">Community</h4>
+        <ul>
+          <li><a href="https://github.com/jarvisos" target="_blank" rel="noopener noreferrer">GitHub Org</a></li>
+          <li><a href="/contributors">Contributors</a></li>
+          <li><a href="https://github.com/jarvisos/jarvisos/issues" target="_blank" rel="noopener noreferrer">Issues</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-heading">Research</h4>
+        <ul>
+          <li><a href="/research#taxonomy">Threat Taxonomy</a></li>
+          <li><a href="/research#surca">SURCA Poster</a></li>
+          <li><a href="/research#paper">Paper</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="mono text-muted">
+        &copy; {year} JARVIS OS Project &mdash; MIT License
+      </p>
+      <p class="mono text-muted footer-wsu">
+        A WSU Everett research project by Yakup Atahanov &amp; Toufic Majdaleni
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    padding-bottom: var(--space-2xl);
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: var(--space-2xl);
+    margin-bottom: var(--space-3xl);
+  }
+
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .footer-logo-img {
+    height: 36px;
+    width: auto;
+  }
+
+  .footer-logo-text {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: 0.08em;
+    color: var(--cyan);
+  }
+
+  .footer-tagline {
+    font-size: 0.85rem;
+    margin-top: var(--space-sm);
+    color: var(--text-muted);
+  }
+
+  .footer-heading {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--cyan);
+    margin-bottom: var(--space-md);
+  }
+
+  .footer-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .footer-col a {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+  }
+
+  .footer-col a:hover {
+    color: var(--cyan);
+  }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+    border-top: 1px solid var(--border);
+    padding-top: var(--space-lg);
+  }
+
+  @media (max-width: 768px) {
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-xl);
+    }
+
+    .footer-bottom {
+      flex-direction: column;
+      gap: var(--space-sm);
+      text-align: center;
+    }
+  }
+</style>

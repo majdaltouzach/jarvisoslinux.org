@@ -1,0 +1,198 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Contributors"
+  description="The team behind JARVIS OS — a WSU Everett research project."
+>
+  <section class="section">
+    <div class="container">
+      <span class="section-label">Team</span>
+      <h1 class="section-title">Contributors</h1>
+      <p class="contrib-intro">
+        JARVIS OS is a research project at Washington State University — Everett,
+        funded by a WSU research grant.
+      </p>
+    </div>
+  </section>
+
+  <!-- Core Team -->
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      <h2 style="margin-bottom: var(--space-xl);">Core Team</h2>
+      <div class="grid-2">
+        <div class="card team-card">
+          <h3>Yakup Atahanov</h3>
+          <p class="mono text-cyan" style="font-size: 0.8rem; margin-bottom: var(--space-sm);">
+            Lead Developer &amp; Researcher
+          </p>
+          <p>
+            Architect of JARVIS OS and lead author of the seven-threat taxonomy.
+            Designed and implemented the full build pipeline, MCP integration, and
+            security analysis framework.
+          </p>
+          <a
+            href="https://github.com/YakupAtahanov"
+            class="team-link mono"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            @YakupAtahanov
+          </a>
+        </div>
+        <div class="card team-card">
+          <h3>Toufic Majdaleni</h3>
+          <p class="mono text-cyan" style="font-size: 0.8rem; margin-bottom: var(--space-sm);">
+            Co-Author &amp; Researcher
+          </p>
+          <p>
+            Co-author of the research paper and contributor to the threat taxonomy
+            analysis. Collaborated on the SURCA presentation and academic methodology.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GitHub Contributors -->
+  <section class="section">
+    <div class="container">
+      <h2 style="margin-bottom: var(--space-xl);">GitHub Contributors</h2>
+      <p style="margin-bottom: var(--space-lg);">
+        Contributors across all repositories in the
+        <a href="https://github.com/jarvisos" target="_blank" rel="noopener noreferrer">jarvisos</a>
+        organization, fetched live from the GitHub API.
+      </p>
+      <div class="grid-4" id="contributors-grid">
+        <div class="card" style="grid-column: 1 / -1; text-align: center;">
+          <p class="mono text-muted">Loading contributors...</p>
+        </div>
+      </div>
+      <noscript>
+        <div class="card" style="margin-top: var(--space-lg);">
+          <p>
+            JavaScript is required to load contributors from GitHub. Visit the
+            <a href="https://github.com/orgs/jarvisos/people" target="_blank" rel="noopener noreferrer">
+              organization page</a> to see the full team.
+          </p>
+        </div>
+      </noscript>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contrib-intro {
+    font-size: 1.05rem;
+    max-width: 640px;
+  }
+
+  .team-card {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .team-link {
+    margin-top: auto;
+    padding-top: var(--space-md);
+    font-size: 0.85rem;
+  }
+
+  .contrib-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: var(--space-lg);
+  }
+
+  .contrib-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    margin-bottom: var(--space-md);
+  }
+
+  .contrib-name {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--text-primary);
+  }
+
+  .contrib-count {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-top: var(--space-xs);
+  }
+</style>
+
+<script>
+  const REPOS = ["jarvisos", "jarvis-core", "mcp-servers", "calamares-config", "jarvisos.github.io"];
+
+  async function fetchContributors() {
+    const grid = document.getElementById("contributors-grid");
+    if (!grid) return;
+
+    try {
+      const allContribs = new Map<string, { login: string; avatar: string; url: string; count: number }>();
+
+      await Promise.all(
+        REPOS.map(async (repo) => {
+          try {
+            const res = await fetch(
+              `https://api.github.com/repos/jarvisos/${repo}/contributors?per_page=50`
+            );
+            if (!res.ok) return;
+            const data = await res.json();
+            for (const c of data) {
+              if (c.type !== "User") continue;
+              const existing = allContribs.get(c.login);
+              if (existing) {
+                existing.count += c.contributions;
+              } else {
+                allContribs.set(c.login, {
+                  login: c.login,
+                  avatar: c.avatar_url,
+                  url: c.html_url,
+                  count: c.contributions,
+                });
+              }
+            }
+          } catch { /* skip repo */ }
+        })
+      );
+
+      const sorted = [...allContribs.values()].sort((a, b) => b.count - a.count);
+
+      if (sorted.length === 0) {
+        grid.innerHTML = `
+          <div class="card" style="grid-column: 1 / -1; text-align: center;">
+            <p class="mono text-muted">No contributors found yet. Check back after the first release.</p>
+          </div>`;
+        return;
+      }
+
+      grid.innerHTML = sorted
+        .map(
+          (c) => `
+        <a href="${c.url}" target="_blank" rel="noopener noreferrer" class="card contrib-card">
+          <img src="${c.avatar}" alt="${c.login}" class="contrib-avatar" loading="lazy" />
+          <span class="contrib-name">@${c.login}</span>
+          <span class="contrib-count">${c.count} contributions</span>
+        </a>`
+        )
+        .join("");
+    } catch {
+      grid.innerHTML = `
+        <div class="card" style="grid-column: 1 / -1; text-align: center;">
+          <p class="mono text-muted">Could not load contributors.
+            <a href="https://github.com/orgs/jarvisos/people">View on GitHub</a></p>
+        </div>`;
+    }
+  }
+
+  fetchContributors();
+</script>

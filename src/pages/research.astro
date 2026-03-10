@@ -1,0 +1,199 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ThreatCard from "../components/ThreatCard.astro";
+
+const threats = [
+  {
+    number: 1,
+    title: "Misinterpreted MCP Keyword Search",
+    severity: "medium" as const,
+    description:
+      "The LLM misinterprets user intent when searching for MCP tools, selecting incorrect or unrelated servers based on superficial keyword matches rather than semantic understanding.",
+  },
+  {
+    number: 2,
+    title: "Misleading MCP Server Usage",
+    severity: "high" as const,
+    description:
+      "MCP servers with ambiguous or misleading descriptions cause the LLM to invoke tools in unintended ways, potentially performing destructive operations the user never requested.",
+  },
+  {
+    number: 3,
+    title: "Unverified Community MCP Servers",
+    severity: "high" as const,
+    description:
+      "Third-party MCP servers from community repositories may contain malicious code or vulnerabilities. The LLM has no mechanism to verify server integrity before granting access.",
+  },
+  {
+    number: 4,
+    title: "Unauthorized Sudo Requests via MCP",
+    severity: "critical" as const,
+    description:
+      "The LLM autonomously escalates privileges by requesting sudo access through MCP tool calls without explicit user authorization, bypassing standard privilege separation.",
+  },
+  {
+    number: 5,
+    title: "Sudo Capability Exploitation",
+    severity: "critical" as const,
+    description:
+      "Once granted sudo access, the LLM may chain multiple privileged operations in ways that exceed the scope of the original user request, creating compounding security risks.",
+  },
+  {
+    number: 6,
+    title: "Unintended File Modification / Deletion",
+    severity: "high" as const,
+    description:
+      "The LLM modifies or deletes system-critical files as a side effect of tool execution, without recognizing the destructive nature of its actions or warning the user.",
+  },
+  {
+    number: 7,
+    title: "Forgetful Context",
+    severity: "novel" as const,
+    description:
+      "LLMs silently drop previously stated security constraints mid-session. A user may set boundaries early in a conversation that the model later violates — with no indication that the constraints were lost. This is a novel finding with no prior literature.",
+  },
+];
+---
+
+<BaseLayout
+  title="Research"
+  description="Seven-threat taxonomy for LLM-OS security — derived from building and operating JARVIS OS at WSU Everett."
+>
+  <section class="section">
+    <div class="container">
+      <span class="section-label">Research</span>
+      <h1 class="section-title">Threat Taxonomy</h1>
+      <p class="research-intro">
+        Traditional operating system security models assume deterministic, predictable
+        programs. Large language models are neither. JARVIS OS was purpose-built to study
+        what happens when a probabilistic AI agent gains real OS-level privileges — and the
+        result is a seven-threat taxonomy derived from direct empirical experience.
+      </p>
+      <p class="research-intro" style="margin-top: var(--space-md);">
+        Three privilege escalation tiers are studied:
+        <strong class="text-cyan">(1)</strong> sandboxed / user-level,
+        <strong class="text-gold">(2)</strong> sudo / elevated,
+        <strong class="text-red">(3)</strong> web-enabled.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0;" id="taxonomy">
+    <div class="container">
+      <div class="grid-2">
+        {threats.map((t) => (
+          <div id={`threat-${t.number}`}>
+            <ThreatCard {...t} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Highlight: Forgetful Context -->
+  <section class="section" id="threat-7">
+    <div class="container">
+      <div class="finding-detail glow-border">
+        <span class="tag tag-novel">Novel Finding</span>
+        <h2 style="margin-top: var(--space-md);">Threat #07 — Forgetful Context</h2>
+        <p style="margin-top: var(--space-md);">
+          This is the standout discovery of the JARVIS OS research project. Unlike the other
+          six threats — which relate to tool misuse or privilege escalation — forgetful context
+          is an <strong>intrinsic property of LLM cognition</strong>.
+        </p>
+        <p style="margin-top: var(--space-md);">
+          Mid-session, the model silently drops security constraints that were explicitly stated
+          earlier in the conversation. There is no warning, no error, no acknowledgment that the
+          constraint was lost. The model simply proceeds as if the restriction was never given.
+        </p>
+        <p style="margin-top: var(--space-md);">
+          This has profound implications for any system that relies on conversational context to
+          enforce security policy. No prior academic literature documents this specific failure
+          mode in the context of OS-level LLM integration.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SURCA / Paper -->
+  <section class="section" id="surca">
+    <div class="container">
+      <span class="section-label">Academic</span>
+      <h2 class="section-title">SURCA & Paper</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>SURCA Presentation</h3>
+          <p>
+            This research is being presented at Washington State University's
+            <strong>Showcase for Undergraduate Research and Creative Activities</strong> (SURCA).
+            The poster covers the full threat taxonomy, system architecture, and methodology.
+          </p>
+          <p class="mono text-muted" style="margin-top: var(--space-md); font-size: 0.8rem;">
+            Poster and presentation materials — coming soon.
+          </p>
+        </div>
+        <div class="card" id="paper">
+          <h3>Academic Paper</h3>
+          <p>
+            A full academic paper is in progress, expanding on the threat taxonomy with
+            empirical data from controlled experiments on JARVIS OS. The paper examines each
+            threat across all three privilege tiers.
+          </p>
+          <p class="mono text-muted" style="margin-top: var(--space-md); font-size: 0.8rem;">
+            Research is ongoing — empirical results forthcoming.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Central thesis -->
+  <section class="section">
+    <div class="container">
+      <div class="thesis-block">
+        <span class="section-label">Central Thesis</span>
+        <blockquote>
+          "Traditional OS security models are fundamentally inadequate for probabilistic
+          AI agents. The JARVIS OS project provides both the platform and the empirical
+          evidence to demonstrate this."
+        </blockquote>
+        <p class="mono text-muted" style="margin-top: var(--space-md); font-size: 0.8rem;">
+          — Yakup Atahanov &amp; Toufic Majdaleni, WSU Everett
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .research-intro {
+    font-size: 1.05rem;
+    max-width: 700px;
+  }
+
+  .finding-detail {
+    padding: var(--space-2xl);
+    border-radius: 6px;
+    background: var(--bg-card);
+  }
+
+  .finding-detail p {
+    max-width: 660px;
+    font-size: 0.95rem;
+  }
+
+  .thesis-block {
+    padding: var(--space-2xl);
+    border-left: 3px solid var(--cyan);
+    background: var(--bg-card);
+    border-radius: 0 6px 6px 0;
+  }
+
+  .thesis-block blockquote {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    color: var(--text-primary);
+    line-height: 1.5;
+    max-width: 640px;
+  }
+</style>

@@ -1,0 +1,176 @@
+---
+const currentPath = Astro.url.pathname;
+
+const links = [
+  { href: "/", label: "Home" },
+  { href: "/research", label: "Research" },
+  { href: "/subsystems", label: "Subsystems" },
+  { href: "/download", label: "Download" },
+  { href: "/docs", label: "Docs" },
+  { href: "/contributors", label: "Contributors" },
+];
+---
+
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="/" class="nav-logo">
+      <img src="/assets/jarvios_cyan_logo.png" alt="JARVIS OS" class="nav-logo-img" />
+      <span class="logo-text">JARVIS OS</span>
+    </a>
+
+    <button class="nav-toggle" aria-label="Toggle menu" id="nav-toggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <ul class="nav-links" id="nav-links">
+      {links.map((link) => (
+        <li>
+          <a
+            href={link.href}
+            class:list={["nav-link", { active: currentPath === link.href }]}
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+      <li>
+        <a
+          href="https://github.com/jarvisos"
+          class="nav-link nav-link-gh"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          GitHub &nearr;
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<style>
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--nav-height);
+    background: #07090fdd;
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    z-index: 1000;
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: 0.08em;
+  }
+
+  .nav-logo:hover {
+    color: var(--text-primary);
+  }
+
+  .nav-logo-img {
+    height: 32px;
+    width: auto;
+  }
+
+  .logo-text {
+    color: var(--cyan);
+  }
+
+  .nav-links {
+    display: flex;
+    list-style: none;
+    gap: var(--space-xs);
+    align-items: center;
+  }
+
+  .nav-link {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    padding: 0.4em 0.8em;
+    border-radius: 4px;
+    transition: all var(--transition-fast);
+    text-transform: lowercase;
+  }
+
+  .nav-link:hover,
+  .nav-link.active {
+    color: var(--cyan);
+    background: #00c8ff0a;
+  }
+
+  .nav-link.active {
+    border: 1px solid var(--border-glow);
+  }
+
+  .nav-link-gh {
+    color: var(--text-muted);
+  }
+
+  /* Mobile toggle */
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  .nav-toggle span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: var(--text-secondary);
+    transition: all var(--transition-fast);
+  }
+
+  @media (max-width: 768px) {
+    .nav-toggle {
+      display: flex;
+    }
+
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: var(--nav-height);
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+      padding: var(--space-md);
+      gap: var(--space-xs);
+    }
+
+    .nav-links.open {
+      display: flex;
+    }
+  }
+</style>
+
+<script>
+  const toggle = document.getElementById("nav-toggle");
+  const links = document.getElementById("nav-links");
+  toggle?.addEventListener("click", () => {
+    links?.classList.toggle("open");
+  });
+</script>

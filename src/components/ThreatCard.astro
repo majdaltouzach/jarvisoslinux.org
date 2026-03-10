@@ -1,0 +1,43 @@
+---
+interface Props {
+  number: number;
+  title: string;
+  severity: "critical" | "high" | "medium" | "novel";
+  description: string;
+}
+
+const { number, title, severity, description } = Astro.props;
+---
+
+<div class="card threat-card">
+  <div class="threat-header">
+    <span class="threat-number mono">#{number.toString().padStart(2, "0")}</span>
+    <span class:list={["tag", `tag-${severity}`]}>{severity}</span>
+  </div>
+  <h3 class="threat-title">{title}</h3>
+  <p class="threat-desc">{description}</p>
+</div>
+
+<style>
+  .threat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-md);
+  }
+
+  .threat-number {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  .threat-title {
+    font-size: 1.1rem;
+    margin-bottom: var(--space-sm);
+  }
+
+  .threat-desc {
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+</style>

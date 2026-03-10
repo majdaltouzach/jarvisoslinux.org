@@ -1,0 +1,129 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SubsystemCard from "../components/SubsystemCard.astro";
+
+const subsystems = [
+  {
+    name: "JARVIS OS Build System",
+    repo: "jarvisos",
+    description:
+      "The main build pipeline — seven modular scripts (01 through 07) that transform a base Arch Linux ISO into a bootable AI-native operating system. Each stage is isolated and reproducible.",
+    tags: ["build-pipeline", "arch-linux", "iso"],
+  },
+  {
+    name: "Jarvis Core",
+    repo: "jarvis-core",
+    description:
+      "The AI daemon and CLI. This is the `jarvis` command that users interact with — the bridge between the LLM and the operating system. Manages sessions, context, and tool dispatch.",
+    tags: ["daemon", "cli", "ollama"],
+  },
+  {
+    name: "MCP Servers",
+    repo: "mcp-servers",
+    description:
+      "The Model Context Protocol orchestration layer and tool registry. Defines the tools the LLM can invoke, manages permissions, and handles the create/modify/delete lifecycle for system tools.",
+    tags: ["mcp", "orchestration", "tools"],
+  },
+  {
+    name: "Calamares Config",
+    repo: "calamares-config",
+    description:
+      "The Calamares graphical installer configuration package. Enables one-click installation of JARVIS OS to physical hardware with automatic partitioning and post-install setup.",
+    tags: ["installer", "calamares", "deployment"],
+  },
+];
+---
+
+<BaseLayout
+  title="Subsystems"
+  description="The modular components that make up JARVIS OS — from the build pipeline to the AI daemon."
+>
+  <section class="section">
+    <div class="container">
+      <span class="section-label">Architecture</span>
+      <h1 class="section-title">Subsystems</h1>
+      <p class="sub-intro">
+        JARVIS OS is built as a set of modular, independently maintained subsystems. Each
+        component lives in its own repository under the
+        <a href="https://github.com/jarvisos" target="_blank" rel="noopener noreferrer">
+          jarvisos GitHub organization</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      <!-- Architecture diagram (text-based) -->
+      <div class="card arch-diagram">
+        <span class="section-label">System diagram</span>
+        <pre class="mono"><code>┌─────────────────────────────────────────────────────────┐
+│                     JARVIS OS                           │
+│                                                         │
+│  ┌───────────┐   ┌──────────────┐   ┌───────────────┐  │
+│  │  jarvis   │──▶│  MCP Server  │──▶│  System Tools │  │
+│  │   core    │   │  Registry    │   │  (sudo-aware) │  │
+│  └─────┬─────┘   └──────────────┘   └───────────────┘  │
+│        │                                                │
+│        ▼                                                │
+│  ┌───────────┐   ┌──────────────┐   ┌───────────────┐  │
+│  │  Ollama   │   │  KDE Plasma  │   │  Calamares    │  │
+│  │  (local)  │   │  6 / Wayland │   │  Installer    │  │
+│  └───────────┘   └──────────────┘   └───────────────┘  │
+│                                                         │
+│  ┌─────────────────────────────────────────────────────┐│
+│  │  Build Pipeline: 01 ▸ 02 ▸ 03 ▸ 04 ▸ 05 ▸ 06 ▸ 07 ││
+│  └─────────────────────────────────────────────────────┘│
+└─────────────────────────────────────────────────────────┘</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      <div class="grid-2">
+        {subsystems.map((s) => (
+          <SubsystemCard {...s} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <span class="section-label">GitHub Organization</span>
+      <h2 class="section-title">Repository structure</h2>
+      <div class="card">
+        <pre class="mono repo-tree"><code>github.com/jarvisos/
+├── jarvisos            ← main build system (the 7 scripts)
+├── jarvis-core         ← AI daemon + CLI
+├── mcp-servers         ← MCP orchestration layer
+├── calamares-config    ← installer config
+└── jarvisos.github.io  ← this website</code></pre>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .sub-intro {
+    font-size: 1.05rem;
+    max-width: 640px;
+  }
+
+  .arch-diagram {
+    padding: var(--space-xl);
+    overflow-x: auto;
+  }
+
+  .arch-diagram pre {
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: var(--cyan-dim);
+  }
+
+  .repo-tree {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+  }
+</style>

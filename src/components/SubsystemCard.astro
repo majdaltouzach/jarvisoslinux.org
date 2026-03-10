@@ -1,0 +1,59 @@
+---
+interface Props {
+  name: string;
+  repo: string;
+  description: string;
+  tags?: string[];
+}
+
+const { name, repo, description, tags = [] } = Astro.props;
+---
+
+<a href={`https://github.com/jarvisos/${repo}`} target="_blank" rel="noopener noreferrer" class="card subsystem-card">
+  <div class="subsystem-header">
+    <span class="mono subsystem-repo">jarvisos/{repo}</span>
+  </div>
+  <h3 class="subsystem-name">{name}</h3>
+  <p class="subsystem-desc">{description}</p>
+  {tags.length > 0 && (
+    <div class="subsystem-tags">
+      {tags.map((t) => (
+        <span class="tag tag-medium">{t}</span>
+      ))}
+    </div>
+  )}
+</a>
+
+<style>
+  .subsystem-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .subsystem-header {
+    margin-bottom: var(--space-md);
+  }
+
+  .subsystem-repo {
+    font-size: 0.75rem;
+    color: var(--cyan-dim);
+  }
+
+  .subsystem-name {
+    font-size: 1.15rem;
+    margin-bottom: var(--space-sm);
+  }
+
+  .subsystem-desc {
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+
+  .subsystem-tags {
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+    margin-top: var(--space-md);
+  }
+</style>
