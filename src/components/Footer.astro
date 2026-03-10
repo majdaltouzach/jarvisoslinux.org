@@ -7,9 +7,10 @@ const year = new Date().getFullYear();
     <hr class="divider" />
     <div class="footer-grid">
       <div class="footer-brand">
-        <span class="footer-logo">
-          <span class="text-cyan">[</span> JARVIS OS <span class="text-cyan">]</span>
-        </span>
+        <div class="footer-logo">
+          <img src="/assets/jarvios_cyan_logo.png" alt="JARVIS OS" class="footer-logo-img" />
+          <span class="footer-logo-text">JARVIS OS</span>
+        </div>
         <p class="footer-tagline">
           AI-native operating system research platform.<br />
           Washington State University — Everett.
@@ -69,10 +70,22 @@ const year = new Date().getFullYear();
   }
 
   .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .footer-logo-img {
+    height: 36px;
+    width: auto;
+  }
+
+  .footer-logo-text {
     font-family: var(--font-heading);
     font-weight: 700;
     font-size: 1.1rem;
     letter-spacing: 0.08em;
+    color: var(--cyan);
   }
 
   .footer-tagline {

@@ -7,6 +7,11 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   <section class="hero">
     <div class="container">
       <div class="hero-content">
+        <img
+          src="/assets/jarvisos_cyan_logo_text.jpg"
+          alt="JARVIS OS — AI-Native Operating System"
+          class="hero-logo"
+        />
         <span class="section-label">Research Platform</span>
         <h1>
           An AI-native operating system<br />
@@ -183,6 +188,13 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
   .hero-content {
     max-width: 760px;
+  }
+
+  .hero-logo {
+    width: min(420px, 100%);
+    height: auto;
+    margin-bottom: var(--space-xl);
+    border-radius: 6px;
   }
 
   .hero h1 {

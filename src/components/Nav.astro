@@ -14,9 +14,8 @@ const links = [
 <nav class="nav">
   <div class="container nav-inner">
     <a href="/" class="nav-logo">
-      <span class="logo-bracket">[</span>
+      <img src="/assets/jarvios_cyan_logo.png" alt="JARVIS OS" class="nav-logo-img" />
       <span class="logo-text">JARVIS OS</span>
-      <span class="logo-bracket">]</span>
     </a>
 
     <button class="nav-toggle" aria-label="Toggle menu" id="nav-toggle">
@@ -71,6 +70,9 @@ const links = [
   }
 
   .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     font-family: var(--font-heading);
     font-size: 1.15rem;
     font-weight: 700;
@@ -82,12 +84,13 @@ const links = [
     color: var(--text-primary);
   }
 
-  .logo-bracket {
-    color: var(--cyan);
+  .nav-logo-img {
+    height: 32px;
+    width: auto;
   }
 
   .logo-text {
-    margin: 0 0.15em;
+    color: var(--cyan);
   }
 
   .nav-links {
