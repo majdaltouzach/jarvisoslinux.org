@@ -47,9 +47,18 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             Co-Author &amp; Researcher
           </p>
           <p>
-            Co-author of the research paper and contributor to the threat taxonomy
-            analysis. Collaborated on the SURCA presentation and academic methodology.
+            Co-author of the research paper and lead on the custom linux-jarvisos kernel.
+            Implemented the /dev/jarvis character device and contributed to the threat
+            taxonomy analysis and SURCA presentation.
           </p>
+          <a
+            href="https://github.com/majdaltouzach"
+            class="team-link mono"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            @majdaltouzach
+          </a>
         </div>
       </div>
     </div>
@@ -60,9 +69,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     <div class="container">
       <h2 style="margin-bottom: var(--space-xl);">GitHub Contributors</h2>
       <p style="margin-bottom: var(--space-lg);">
-        Contributors across all repositories in the
-        <a href="https://github.com/jarvisos" target="_blank" rel="noopener noreferrer">jarvisos</a>
-        organization, fetched live from the GitHub API.
+        Contributors across all JARVIS OS repositories, fetched live from the GitHub API.
       </p>
       <div class="grid-4" id="contributors-grid">
         <div class="card" style="grid-column: 1 / -1; text-align: center;">
@@ -73,8 +80,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         <div class="card" style="margin-top: var(--space-lg);">
           <p>
             JavaScript is required to load contributors from GitHub. Visit the
-            <a href="https://github.com/orgs/jarvisos/people" target="_blank" rel="noopener noreferrer">
-              organization page</a> to see the full team.
+            <a href="https://github.com/YakupAtahanov" target="_blank" rel="noopener noreferrer">
+              YakupAtahanov's GitHub</a> to see the full team.
           </p>
         </div>
       </noscript>
@@ -130,7 +137,13 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 </style>
 
 <script>
-  const REPOS = ["jarvisos", "jarvis-core", "mcp-servers", "calamares-config", "jarvisos.github.io"];
+  const REPOS = [
+    "YakupAtahanov/jarvisos",
+    "YakupAtahanov/Project-JARVIS",
+    "YakupAtahanov/dmcp",
+    "YakupAtahanov/dispatch",
+    "majdaltouzach/linux",
+  ];
 
   async function fetchContributors() {
     const grid = document.getElementById("contributors-grid");
@@ -143,7 +156,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         REPOS.map(async (repo) => {
           try {
             const res = await fetch(
-              `https://api.github.com/repos/jarvisos/${repo}/contributors?per_page=50`
+              `https://api.github.com/repos/${repo}/contributors?per_page=50`
             );
             if (!res.ok) return;
             const data = await res.json();
@@ -189,7 +202,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       grid.innerHTML = `
         <div class="card" style="grid-column: 1 / -1; text-align: center;">
           <p class="mono text-muted">Could not load contributors.
-            <a href="https://github.com/orgs/jarvisos/people">View on GitHub</a></p>
+            <a href="https://github.com/YakupAtahanov">View on GitHub</a></p>
         </div>`;
     }
   }
