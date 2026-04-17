@@ -120,7 +120,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     font-size: 0.85rem;
   }
 
-  .contrib-card {
+  :global(.contrib-card) {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -128,21 +128,22 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     padding: var(--space-lg);
   }
 
-  .contrib-avatar {
-    width: 64px;
-    height: 64px;
+  :global(.contrib-avatar) {
+    width: 96px;
+    height: 96px;
     border-radius: 50%;
     border: 2px solid var(--border);
     margin-bottom: var(--space-md);
+    object-fit: cover;
   }
 
-  .contrib-name {
+  :global(.contrib-name) {
     font-family: var(--font-mono);
     font-size: 0.8rem;
     color: var(--text-primary);
   }
 
-  .contrib-count {
+  :global(.contrib-count) {
     font-family: var(--font-mono);
     font-size: 0.7rem;
     color: var(--text-muted);
